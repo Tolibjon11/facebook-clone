@@ -1,5 +1,6 @@
 import React from 'react'
 import './Style.css'
+import firebase from 'firebase'
 import logo from '../../assets/icons/icons8-facebook.svg'
 import { 
     Search, Home, Flag, SubscriptionsOutlined, 
@@ -55,8 +56,8 @@ return (<div className='header'>
                 <IconButton>
                     <NotificationsActive />
                 </IconButton>
-                <IconButton>
-                    <ExpandMore />
+                <IconButton onClick={() => firebase.auth().signOut()}>
+                    <ExpandMore  />
                 </IconButton>
             </div>
         </div>

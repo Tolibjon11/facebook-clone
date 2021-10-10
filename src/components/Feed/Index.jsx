@@ -23,6 +23,7 @@ const Index = () => {
                 posts.map((post) => (
                     <Post
                         key={post.id}
+                        id={post.id}
                         message={post.data.message}
                         profilePic={post.data.profilePic}
                         timestamp={post.data.timestamp}

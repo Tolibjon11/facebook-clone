@@ -4,6 +4,7 @@ import './Style.css'
 import { auth, provider } from '../../firebase'
 import { actionTypes } from '../../reducer'
 import { useStateValue } from '../../StateProvider'
+import firebase from 'firebase'
 
 const Index = () => {
     const [state, dispatch] = useStateValue();
@@ -35,6 +36,9 @@ const Index = () => {
             </div>
             <Button type='submit' onClick={signIn}>
                 Sign In
+            </Button>
+            <Button onClick={() => auth.signOut()}>
+                Sign Out
             </Button>
         </div>
     )

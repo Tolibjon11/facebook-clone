@@ -42,45 +42,64 @@ const Index = () => {
             }
         }
 
+    const handleSubmitWithCaption = (e) => {
+        // e.preventDefault();
 
-    const handleUpload = () => {
+        db.collection('posts').add({
+            message: input,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            username: user.displayName,
+            profilePic: user.photoURL,
+            image: imageUrl
+        })
+        setInput("");
+        setShowImage(null)
+        setOpen(false)
+    }
+
+
+    const handleUploadImageWithCaption = () => {
         setShowImage(null);
         setInput("")
-        const uploadTask = storage.ref(`images/${imageUrl.name}`).put(imageUrl);
-
-        uploadTask.on(
-            "state_changed",
-            snapshot => {
-                //progress function
-                const progress = Math.round(
-                    (snapshot.bytesTransferred / snapshot.totalBytes)*100
-                );
-                setProgress(progress);
-            },
-            error => {
-                // Error function ...
-                console.log(error)
-                alert(error.message)
-            },
-            () => {
-                // complete function
-                storage.ref("images")
-                    .child(imageUrl.name)
-                    .getDownloadURL().then(url => {
-                        db.collection('posts').add({
-                            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                            message: input,
-                            image: url,
-                            username: user.displayName,
-                            profilePic: user.photoURL
+            const uploadTask = storage.ref(`images/${imageUrl.name}`).put(imageUrl);
+        
+            uploadTask.on(
+                "state_changed",
+                snapshot => {
+                    //progress function
+                    const progress = Math.round(
+                        (snapshot.bytesTransferred / snapshot.totalBytes)*100
+                    );
+                    setProgress(progress);
+                },
+                error => {
+                    // Error function ...
+                    console.log(error)
+                    alert(error.message)
+                },
+                () => {
+                    // complete function
+                    storage.ref("images")
+                        .child(imageUrl.name)
+                        .getDownloadURL().then(url => {
+                            db.collection('posts').add({
+                                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                                message: input,
+                                image: url,
+                                username: user.displayName,
+                                profilePic: user.photoURL
+                            })
+                            setOpen(false)
+                            setProgress(0);
+                            setInput('');
+                            // setImageUrl(null)   ;
                         })
-                        setOpen(false)
-                        setProgress(0);
-                        setInput('');
-                        // setImageUrl(null)   ;
-                    })
-            }
-        )
+                }
+            )
+    }
+
+    const handleUpload = () => {
+        showImage ? handleUploadImageWithCaption() : handleSubmitWithCaption();
     }
 
 
@@ -174,6 +193,7 @@ const Index = () => {
                                 
                             </div>
                         <div className="image__div">
+                            <p style={{display: `${showImage && 'none'}`}}>See image you choose here...</p>
                             <img src={showImage} alt="" />
                         </div>
                         </div>
