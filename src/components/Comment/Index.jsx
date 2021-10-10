@@ -8,7 +8,7 @@ import './Style.css'
 import { useStateValue } from './../../StateProvider';
 
 
-const Index = ({postId, repliedID, reply, username, repliedMessage, replySend, isSend}) => {
+const Index = ({postId, repliedID, reply, username, repliedMessage, replySend, isSend, autoFocusInput}) => {
     const [{user}, dispatch] = useStateValue();
     const [commit, setCommit] = useState('');
     const [showPicker, setShowPicker] = useState(false);
@@ -42,7 +42,7 @@ const Index = ({postId, repliedID, reply, username, repliedMessage, replySend, i
 
 
     return (
-        <div className='comment_' style={{display: `${isSend&&"none"}`}}>
+        <div className='comment_' style={{display: `${isSend?"none":"flex"}`}}>
             <Avatar 
                 src={user.photoURL}
                 className='comment-avatar'
@@ -51,7 +51,8 @@ const Index = ({postId, repliedID, reply, username, repliedMessage, replySend, i
                 <input 
                     value={commit} 
                     type="text" placeholder='Write a comment...' 
-                    onChange={(e) => setCommit(e.target.value)} 
+                    onChange={(e) => setCommit(e.target.value)}
+                    autoFocus={`${reply===true&&autoFocusInput}`} 
                 />
                 <InsertEmoticon
                     className='emoji-icon_'

@@ -66,6 +66,11 @@
 .comment > p{
     font-size: 18px;
     color: #65676B;
+    border-bottom: 1px solid transparent;
+}
+.comment > p:hover{
+    border-bottom: 1px solid #65676B;
+    cursor: pointer;
 }
 
 .post-options{
@@ -129,6 +134,8 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-between;
+    word-break: break-all;
+    max-width: 350px;
 }
 .username{
     font-weight: 500;
@@ -152,4 +159,32 @@
 .sender{
     border: none;
     outline: none;
+}
+
+.replied_com{
+    border-left: 3px solid lightgray;
+    padding-left: 4px;
+    margin: 5px 0;
+}
+.replied_com > p{
+    color: #65676B;
+}
+
+.expand_more_info_amount_comment{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.expand_more, .info_amount_comment{
+    color: #65676B;
+    font-weight: 500;
+    font-size: 18px;
+    border-bottom: 2px solid transparent;
+    width: fit-content;
+}
+.expand_more:hover{
+    border-bottom: 2px solid #65676B;
+    cursor: pointer;
 }
