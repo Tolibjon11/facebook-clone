@@ -53,7 +53,7 @@ const Index = ({profilePic, image, username, timestamp, message, id, like, click
         
 
         db.collection('posts').doc(id).update({
-            clickedLike: !clickedLike,
+            clickedLike: username===user.displayName&&!clickedLike,
             like: clickedLike?like-1:like+1,
             clickedLikeByUsersArray: clickedLike? 
             [...clickedLikeByUsersArray.filter((e) => e.userRefreshToken!==userRefreshToken)] : 
@@ -69,7 +69,7 @@ const Index = ({profilePic, image, username, timestamp, message, id, like, click
     const handleCommentLike = (id_comment, likeComment, clickedLikeComment, clickedLikeCommentByUsersArray, token, username, pictureUrl) => {
         
         db.collection('posts').doc(id).collection('comments').doc(id_comment).update({
-            clickedLikeComment: !clickedLikeComment,
+            clickedLikeComment: username===user.displayName&&!clickedLikeComment,
             likeComment: clickedLikeComment?likeComment-1:likeComment+1,
             clickedLikeCommentByUsersArray: !clickedLikeComment?
             [...clickedLikeCommentByUsersArray.filter((e) => e.userRefreshToken!==token)]:
