@@ -17,6 +17,8 @@ const Index = ({profilePic, image, username, timestamp, message, id, like, click
     const [isSendReplyMessage, setIsSendReplyMessage] = useState()
     const [isAutoFocus, setIsAutoFocus] = useState(false)
     const [amountComments, setAmountComments] = useState(2);
+    const [isClickedLike,setIsClickedLike] = useState(false)
+    const [isClickedLikeComment, setIsClickedLikeComment] = useState(false)
     const [isClickedMoreHoriz, setIsClickedMoreHoriz] = useState(false)
     const [isClickedMoreHorizOfCommit, setIsclickedMoreHorizOfCommit] = useState(false)
     const [open, setOpen] = useState(false)
@@ -25,13 +27,6 @@ const Index = ({profilePic, image, username, timestamp, message, id, like, click
     const [idClickedMoreHorizOfCommit, setIdClickedMoreHorizOfCommit] = useState(0)
     const [isClickedLikeCommentBtn, setIsClickedLikeCommentBtn] = useState(false)
     const [usersWhoClickForCommit, setUsersWhoClickForCommit] = useState([])
-
-    function arrayRemove(arr, value) { 
-    
-        return arr.filter(function(ele){ 
-            return ele !== value; 
-        });
-    }
 
     useEffect(() => {
         if(id){
@@ -50,12 +45,11 @@ const Index = ({profilePic, image, username, timestamp, message, id, like, click
     
 
     const handleLike = (userUsername, userPhoto, userRefreshToken) =>{
-        
+        setIsClickedLike(!isClickedLike);
 
         db.collection('posts').doc(id).update({
-            clickedLike: userUsername===user.displayName&&!clickedLike,
-            like: clickedLike?like-1:like+1,
-            clickedLikeByUsersArray: clickedLike? 
+            like: !isClickedLike?like+1:like-1,
+            clickedLikeByUsersArray: isClickedLike? 
             [...clickedLikeByUsersArray.filter((e) => e.userRefreshToken!==userRefreshToken)] : 
             [...clickedLikeByUsersArray, {
                 userPhoto: userPhoto,
@@ -68,10 +62,11 @@ const Index = ({profilePic, image, username, timestamp, message, id, like, click
 
     const handleCommentLike = (id_comment, likeComment, clickedLikeComment, clickedLikeCommentByUsersArray, token, username, pictureUrl) => {
         
+        setIsClickedLikeComment(!isClickedLikeComment)
+
         db.collection('posts').doc(id).collection('comments').doc(id_comment).update({
-            clickedLikeComment: username===user.displayName&&!clickedLikeComment,
-            likeComment: clickedLikeComment?likeComment-1:likeComment+1,
-            clickedLikeCommentByUsersArray: !clickedLikeComment?
+            likeComment: !isClickedLikeComment?likeComment+1:likeComment-1,
+            clickedLikeCommentByUsersArray: isClickedLikeComment?
             [...clickedLikeCommentByUsersArray.filter((e) => e.userRefreshToken!==token)]:
             [...clickedLikeCommentByUsersArray, {
                 userPhoto: pictureUrl,
@@ -234,7 +229,7 @@ const Index = ({profilePic, image, username, timestamp, message, id, like, click
                     <button 
                         className="post-option" onClick={() => handleLike(user.displayName, user.photoURL, user.refreshToken)}>
                         {
-                            clickedLike?
+                            isClickedLike?
                             <ThumbUp style={{color: '#0571ed'}}/>:
                             <ThumbUpAltOutlined style={{color: "#65676b"}}/>
                         }
@@ -343,7 +338,7 @@ const Index = ({profilePic, image, username, timestamp, message, id, like, click
                                                         com.data.refreshToken,
                                                         com.data.username, com.data.pictureUrl
                                                     )}
-                                                    style={{color:`${com.data.clickedLikeComment?'#0571ED':'#65676B'}`}} 
+                                                    style={{color:`${isClickedLikeComment?'#0571ED':'#65676B'}`}} 
                                                 >Like</div>
                                                 <div 
                                                     className="reply" 

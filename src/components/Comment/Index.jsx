@@ -33,7 +33,6 @@ const Index = ({postId, repliedID, reply, username, repliedMessage, replySend, i
             repliedUser: reply===true&&username,
             repliedMessage: reply===true&&repliedMessage,
             likeComment:0,
-            clickedLikeComment: false,
             clickedLikeCommentByUsersArray: []
         })
 
