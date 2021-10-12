@@ -26,6 +26,114 @@
     color: gray;
 }
 
+.post-morehoriz-btn{
+    transform: scale(1.2);
+}
+
+.delete-div{
+    box-shadow: 2px 4px 8px lightgray;
+    padding: 6px;
+    border-radius: 12px;
+    position: absolute;
+    right: 0;
+    top: 60px;
+}
+
+.delete-container{
+    display: flex;
+    padding: 5px 30px 5px 5px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+.delete-container:hover{
+    background-color: #eff2f5;
+    cursor: pointer;
+}
+.select-option{
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 999;
+    background-color: white;
+    top: 0;
+    left: 0;
+    border-radius: 12px;
+}
+
+.delete-container > p{
+    font-size: 18px;
+    font-weight: 550;
+    margin-left:5px;
+    color: #414244;
+}
+
+.close-delete-div{
+    position: absolute;
+    right: 26px;
+    top: -16px;
+    transform: scale(1.5);
+    color: lightgray;
+    border-radius: 50%;
+}
+
+.delete-post{
+    border: 1px solid transparent;
+    width: fit-content;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: space-between; */
+    background-color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -44%);
+    border-radius: 15px;
+    box-shadow: 0px 5px 17px -7px rgba(0, 0, 0, 0.75);
+}
+
+.deletePost__header{
+    padding-top: 15px;
+    padding-bottom: 15px;
+    width: 100%;
+    position: relative;
+}
+
+.deletePost__header > p{
+    font-size: 18px;
+    text-align: center;
+    font-weight: 670;
+}
+
+.deletePost__body{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.yes-btn, .no-btn{
+    font-size: 18px;
+    font-weight: 500;
+    padding: 5px 20px;
+    background-color: #1876F2;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.no-btn{
+    margin-left: 45px;
+    background-color: rgb(255, 56, 56);
+}
+
 .post-bottom{
     margin-top: 10px;
     margin-bottom: 10px;
@@ -53,12 +161,17 @@
     justify-content: space-between;
     padding: 10px 0;
 }
-.like{
+.like_{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    cursor: pointer;
+    border-bottom: 1px solid transparent;
 }
-.like > p{
+.like_:hover{
+    border-bottom: 1px solid gray;
+}
+.like_ > p{
     font-size: 18px;
     padding-left: 8px;
     color: #65676B;
@@ -82,7 +195,7 @@
     justify-content: space-between;
     font-size: medium;
     color: gray;
-    cursor: pointer;
+    /* cursor: pointer; */
     padding: 10px 0;
 }
 
@@ -92,10 +205,16 @@
     align-items: center;
     padding: 5px;
     flex: 1;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
 }
 
 .post-option > p{
     margin-left: 10px;
+    font-size: 20px;
+    font-weight: 550;
+    color: #65676B;
 }
 
 .post-option:hover{
@@ -125,9 +244,10 @@
 .commend_sender_avatar{
     transform: scale(1.1);
 }
+
 .comment__body{
     background-color: #F0F2F5;
-    padding: 10px;
+    padding: 15px 10px;
     border-radius: 18px;
     margin-left: 10px;
     display: flex;
@@ -137,6 +257,126 @@
     word-break: break-all;
     max-width: 350px;
 }
+
+.delete-comment-modal{
+    border: none;
+    outline: none;
+    width: 600px;
+    min-height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: space-between; */
+    background-color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -44%);
+    border-radius: 15px;
+    padding-bottom: 20px;
+    box-shadow: 3px 5px 10px lightgray;
+}
+
+.deleteComment-header > p{
+    font-size: 24px;
+    font-weight: 750;
+    margin-left: 20px;
+}
+
+.deleteComment-body{
+    width: 100%;
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+}
+
+.deleteComment-body > p{
+    width: 100%;
+    text-align: left;
+    font-size: 20px;
+}
+
+.confrim_or_reject__delete{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+    margin-right: 10px;
+}
+
+.cancel__btn__comment{
+    font-size: 20px;
+    color: #1876F2;
+    font-weight: 600;
+    padding: 5px 12px 7px 12px;
+    text-align: inherit;
+    border-radius: 8px;  
+    transition: all 0.3s ease-in-out; 
+}
+.cancel__btn__comment:hover{
+    background-color: #eff2f5;
+    cursor: pointer;
+}
+
+.delete__btn__comment{
+    font-size: 20px;
+    color: #fff;
+    font-weight: 600;
+    padding: 5px 12px 7px 12px;
+    text-align: inherit;
+    border-radius: 8px;
+    background-color: #1876F2; 
+    margin-left: 10px; 
+    cursor: pointer;
+}
+
+.delete__comment__div{
+    box-shadow: 3px 5px 8px lightgray;
+    border-radius: 8px;
+    padding: 5px;
+    position: absolute;
+    background-color: white;
+    right: -72px;
+    top: 50px;
+}
+
+.delete__comment__div > p{
+    font-size: 18px;
+    font-weight: 550;
+    padding: 4px 50px 4px 4px;
+    border-radius: 7px;
+    transition: all 0.3s ease-in-out;
+}
+
+.delete__comment__div > p:hover{
+    background-color: #eff2f5;
+    cursor: pointer;
+}
+
+.arrow-delete-comment{
+    position: absolute;
+    left: 50%;
+    transform: translateY(-50%);
+    top: 0;
+    color: #eff2f5;
+}
+
+.deleteComment-header{
+    padding-top: 19px;
+    padding-bottom: 20px;
+    width: 100%;
+    border-bottom: 1px solid gray;
+    position: relative;
+}
+
+.delete__comment__open__icon{
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+
+
 .username{
     font-weight: 500;
 }
@@ -144,15 +384,13 @@
 .like_commed{
     display: flex;
     padding-left: 10px;
+    position: relative;
 }
 .like, .reply{
     font-weight: 750;
     color: #65676B;
     border-bottom: 2px solid transparent;
     margin-right: 10px;
-}
-.like:hover, .reply:hover{
-    border-bottom: 2px solid #65676B;
     cursor: pointer;
 }
 
@@ -187,4 +425,110 @@
 .expand_more:hover{
     border-bottom: 2px solid #65676B;
     cursor: pointer;
+}
+
+.like-comment_{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+    right: -30px;
+    bottom: 20px;
+    border: 1px solid lightgray;
+    box-shadow: 2px 2px 5px lightgray ;
+    border-radius: 999px;
+    padding: 2px 4px 2px 3px;
+}
+.like-comment_ > p{
+    margin-left: 5px;
+}
+
+.users_click_like{
+    width: 600px;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+
+.users_who_click_like{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 100%;
+}
+
+.users_click_like_header{
+    border-bottom: 1.5px solid lightgray;
+    padding-bottom: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.users_click_like_header>p{
+    text-align: left;
+    margin-left: 20px;
+    color: #2078F4;
+    border-bottom: 2px solid #2078F4;
+    width: fit-content;
+    padding: 2px 10px 10px 10px;
+    cursor: pointer;
+}
+
+.info_user_who_click_like{
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 13px;
+}
+.info_user_who_click_like:hover{
+    background-color: #F0F2F5;
+}
+
+.info_user_who_click_like>p{
+    font-size: 20px;
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+.info_user_who_click_like>p:hover{
+    border-bottom: 1px solid black;
+    cursor: pointer;
+}
+
+
+.closeModal__btn{
+    margin-right: 10px;
+    cursor: pointer;
+    background-color: #E4E6EB;
+    padding: 3px;
+    border-radius: 50%;
+    transform: scale(1.2);
+}
+
+.user__img{
+    width: 50px;
+    height: fit-content;
+    border-radius: 50%;
+    position: relative;
+}
+
+.add__friend__btn{
+    display: flex;
+    background-color: #E4E6EB;
+    border-radius: 8px;
+    padding: 8px;
+    margin-left: auto;
+    cursor: pointer;
+}
+
+.add__friend__btn>p{
+    font-size: 18px;
+    font-weight: 650;
+    margin-left: 5px;
 }

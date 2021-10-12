@@ -29,6 +29,9 @@ const Index = () => {
                         timestamp={post.data.timestamp}
                         username={post.data.username}
                         image={post.data.image}
+                        like={post.data.like}
+                        clickedLike={post.data.clickedLike}
+                        clickedLikeByUsersArray={post.data.clickedLikeByUsersArray}
                     />
                 ))
             }

@@ -13,6 +13,7 @@
 
 .emoji_with_input{
     width: 100%;
+    word-break: break-all;
     display: flex;
     position: relative;
     justify-content: space-between;
@@ -34,3 +35,4 @@
 .picker{
     box-shadow: 0 10px 12px gray;
 }
+

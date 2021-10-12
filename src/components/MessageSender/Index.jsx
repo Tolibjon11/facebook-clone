@@ -50,7 +50,10 @@ const Index = () => {
             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
             username: user.displayName,
             profilePic: user.photoURL,
-            image: imageUrl
+            image: imageUrl,
+            like:0,
+            clickedLike: false,
+            clickedLikeByUsersArray:[]
         })
         setInput("");
         setShowImage(null)

@@ -6,6 +6,9 @@ import Feed from './components/Feed/Index'
 import Widgets from './components/WidgetsComponent/Index'
 import Login from './components/Login/Index'
 import { useStateValue } from './StateProvider';
+import { ToastContainer } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+
 
 function App() {
   const [{ user }, dispatch] = useStateValue();
@@ -14,6 +17,7 @@ function App() {
       {!user ? (<Login />):(
         <>
           <Header />
+          <ToastContainer />
 
           <div className='app-body'>
             {/* <div> */}
