@@ -53,7 +53,7 @@ const Index = ({profilePic, image, username, timestamp, message, id, like, click
         
 
         db.collection('posts').doc(id).update({
-            clickedLike: username===user.displayName&&!clickedLike,
+            clickedLike: userUsername===user.displayName&&!clickedLike,
             like: clickedLike?like-1:like+1,
             clickedLikeByUsersArray: clickedLike? 
             [...clickedLikeByUsersArray.filter((e) => e.userRefreshToken!==userRefreshToken)] : 
