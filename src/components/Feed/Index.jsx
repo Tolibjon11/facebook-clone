@@ -14,13 +14,14 @@ const Index = () => {
             setPosts(snapshot.docs.map((doc) => ({id: doc.id, data: doc.data()})))
         );
     }, []);
+
     
     return (
         <div className="feed">
             <StoryReel />
             <MessageSender />
             {
-                posts.map((post) => (
+                posts.map((post, index) => (
                     <Post
                         key={post.id}
                         id={post.id}
@@ -30,8 +31,9 @@ const Index = () => {
                         username={post.data.username}
                         image={post.data.image}
                         like={post.data.like}
-                        clickedLike={post.data.clickedLike}
+                        likeControlArray={post.data.likeControlArray}
                         clickedLikeByUsersArray={post.data.clickedLikeByUsersArray}
+                        index={index}
                     />
                 ))
             }

@@ -27,7 +27,7 @@ const Index = ({postId, repliedID, reply, username, repliedMessage, replySend, i
             comment: commit,
             username: user.displayName,
             pictureUrl: user.photoURL,
-            refreshToken: user.refreshToken,
+            refreshToken: user.uid,
             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
             repliedID: reply===true && repliedID,
             repliedUser: reply===true&&username,

@@ -52,7 +52,7 @@ const Index = () => {
             profilePic: user.photoURL,
             image: imageUrl,
             like:0,
-            clickedLike: false,
+            likeControlArray:{},
             clickedLikeByUsersArray:[]
         })
         setInput("");

@@ -3,13 +3,13 @@ import React,{useState, useEffect} from 'react'
 import OutsideClickHandler from 'react-outside-click-handler'
 import './Style.css'
 import Like from '../../assets/icons/like.svg'
-import { ThumbUpAltOutlined, ThumbUp, ChatBubbleOutline, NearMe, MoreHoriz, DeleteOutline, ArrowDropUp, Clear, PersonAdd } from '@material-ui/icons'
+import { ThumbUpAltOutlined, ThumbUp, ChatBubbleOutline, NearMe, MoreHoriz, DeleteOutline, ArrowDropUp, Clear, PersonAdd, FlashOnTwoTone } from '@material-ui/icons'
 import Comment from '../Comment/Index'
 import db from '../../firebase'
 import { toast } from 'react-toastify'
 import { useStateValue } from './../../StateProvider';
 
-const Index = ({profilePic, image, username, timestamp, message, id, like, clickedLike, clickedLikeByUsersArray}) => {
+const Index = ({profilePic, image, username, timestamp, message, id, like, index, clickedLikeByUsersArray, likeControlArray}) => {
 
     const [comments, setComments] = useState([]);
     const [{user}, despatch] = useStateValue()
@@ -17,8 +17,7 @@ const Index = ({profilePic, image, username, timestamp, message, id, like, click
     const [isSendReplyMessage, setIsSendReplyMessage] = useState()
     const [isAutoFocus, setIsAutoFocus] = useState(false)
     const [amountComments, setAmountComments] = useState(2);
-    const [isClickedLike,setIsClickedLike] = useState(false)
-    const [isClickedLikeComment, setIsClickedLikeComment] = useState(false)
+    const [isClickedLikeComment, setIsClickedLikeComment] = useState(localStorage.getItem('check_click_comment_like'))
     const [isClickedMoreHoriz, setIsClickedMoreHoriz] = useState(false)
     const [isClickedMoreHorizOfCommit, setIsclickedMoreHorizOfCommit] = useState(false)
     const [open, setOpen] = useState(false)
@@ -26,57 +25,68 @@ const Index = ({profilePic, image, username, timestamp, message, id, like, click
     const [openLikeUsers, setOpenLikeUsers] = useState(false)
     const [idClickedMoreHorizOfCommit, setIdClickedMoreHorizOfCommit] = useState(0)
     const [isClickedLikeCommentBtn, setIsClickedLikeCommentBtn] = useState(false)
-    const [usersWhoClickForCommit, setUsersWhoClickForCommit] = useState([])
+    const [usersWhoClickForCommit, setUsersWhoClickForCommit] = useState([]);
 
-    useEffect(() => {
-        if(id){
-            var unsubcribe = db.collection('posts')
-            .doc(id).collection('comments')
-            .orderBy('timestamp', 'desc')
-            .onSnapshot((snapshot) => setComments(snapshot.docs.map((doc) =>({id:doc.id, data:doc.data()}))))
-            
-        }
-        return () => {
-            unsubcribe();
-            
-        }
-        
-    }, [id])
     
 
-    const handleLike = (userUsername, userPhoto, userRefreshToken) =>{
-        setIsClickedLike(!isClickedLike);
+    const handleLike = (userUsername, userPhoto) => {
+
+
+        let check=false;
+        
+        for (let i=0; i<Object.keys(likeControlArray).length; i++){
+            if(user.uid === Object.keys(likeControlArray)[i]){
+                check=true;
+            }
+            else check=false
+        }
+
 
         db.collection('posts').doc(id).update({
-            like: !isClickedLike?like+1:like-1,
-            clickedLikeByUsersArray: isClickedLike? 
-            [...clickedLikeByUsersArray.filter((e) => e.userRefreshToken!==userRefreshToken)] : 
+            likeControlArray: !check ? {
+                [user.uid]: {
+                    post_id: id,
+                    clickLikePost: likeControlArray[user.uid]===undefined?true:!likeControlArray[user.uid].clickLikePost
+                }
+            }:
+            {...likeControlArray,
+                [user.uid]: {
+                    post_id: id,
+                    clickLikePost: likeControlArray[user.uid]===undefined?true:!likeControlArray[user.uid].clickLikePost
+                }
+            },
+            like: (likeControlArray[user.uid]===undefined?true:!likeControlArray[user.uid].clickLikePost)?like+1:like-1,
+            clickedLikeByUsersArray: (likeControlArray[user.uid]===undefined?false:likeControlArray[user.uid].clickLikePost)? 
+            [...clickedLikeByUsersArray.filter((e) => e.userRefreshToken!==user.uid)] : 
             [...clickedLikeByUsersArray, {
                 userPhoto: userPhoto,
                 userUsername: userUsername, 
-                userRefreshToken:userRefreshToken
+                userRefreshToken:user.uid
             }]
         })
     }
 
+    
 
-    const handleCommentLike = (id_comment, likeComment, clickedLikeComment, clickedLikeCommentByUsersArray, token, username, pictureUrl) => {
+
+    const handleCommentLike = (id_comment, likeComment, clickedLikeCommentByUsersArray, token, username, pictureUrl) => {
+        localStorage.setItem("check_click_comment_like", !JSON.parse(localStorage.getItem("check_click_comment_like")))
         
-        setIsClickedLikeComment(!isClickedLikeComment)
 
         db.collection('posts').doc(id).collection('comments').doc(id_comment).update({
-            likeComment: !isClickedLikeComment?likeComment+1:likeComment-1,
-            clickedLikeCommentByUsersArray: isClickedLikeComment?
-            [...clickedLikeCommentByUsersArray.filter((e) => e.userRefreshToken!==token)]:
+            likeComment: JSON.parse(localStorage.getItem("check_click_comment_like"))?likeComment+1:likeComment-1,
+            clickedLikeCommentByUsersArray: !JSON.parse(localStorage.getItem("check_click_comment_like"))?
+            [...clickedLikeCommentByUsersArray?.filter((e) => e.userRefreshToken!==token)]:
             [...clickedLikeCommentByUsersArray, {
                 userPhoto: pictureUrl,
                 userUsername: username,
                 userRefreshToken: token
             }]
         })
-        setUsersWhoClickForCommit([...clickedLikeCommentByUsersArray])
-        console.log('comment uchun like bosgan users: ', usersWhoClickForCommit)
+        // setUsersWhoClickForCommit([...clickedLikeCommentByUsersArray])
     }
+
+    
 
     const handleDeletePost = () => {
         setOpen(false)
@@ -227,13 +237,13 @@ const Index = ({profilePic, image, username, timestamp, message, id, like, click
                 </div>
                 <div className="post-options">
                     <button 
-                        className="post-option" onClick={() => handleLike(user.displayName, user.photoURL, user.refreshToken)}>
+                        className="post-option" onClick={() => handleLike(user.displayName, user.photoURL)}>
                         {
-                            isClickedLike?
+                            likeControlArray[user.uid]?.clickLikePost?
                             <ThumbUp style={{color: '#0571ed'}}/>:
                             <ThumbUpAltOutlined style={{color: "#65676b"}}/>
                         }
-                        <p style={{color: `${clickedLike?'#0571ED':"#65676b"}`}}>Like</p>
+                        <p style={{color: `${likeControlArray[user.uid]?.clickLikePost?'#0571ED':"#65676b"}`}}>Like</p>
                         
                     </button>
                     <div className="post-option">
@@ -338,7 +348,7 @@ const Index = ({profilePic, image, username, timestamp, message, id, like, click
                                                         com.data.refreshToken,
                                                         com.data.username, com.data.pictureUrl
                                                     )}
-                                                    style={{color:`${isClickedLikeComment?'#0571ED':'#65676B'}`}} 
+                                                    style={{color:`${JSON.parse(localStorage.getItem("check_click_comment_like"))?'#0571ED':'#65676B'}`}} 
                                                 >Like</div>
                                                 <div 
                                                     className="reply" 
