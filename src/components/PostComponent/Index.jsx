@@ -27,12 +27,33 @@ const Index = ({profilePic, image, username, timestamp, message, id, like, index
     const [isClickedLikeCommentBtn, setIsClickedLikeCommentBtn] = useState(false)
     const [usersWhoClickForCommit, setUsersWhoClickForCommit] = useState([]);
 
-    
+    const [b, setB] = useState(false)
 
+    
+    
+    useEffect(() => {
+        localStorage.setItem("check_click_comment_like", JSON.parse(localStorage.getItem("check_click_comment_like")))
+        if(id){
+            var unsubcribe = db.collection('posts')
+            .doc(id).collection('comments')
+            .orderBy('timestamp', 'desc')
+            .onSnapshot((snapshot) => setComments(snapshot.docs.map((doc) =>({id:doc.id, data:doc.data()}))))
+            
+        }
+        return () => {
+            unsubcribe();
+            
+        }
+        
+    }, [id])
+
+
+    var checkLike;
     const handleLike = (userUsername, userPhoto) => {
 
 
         let check=false;
+        checkLike = (likeControlArray[user.uid]===undefined?true:!likeControlArray[user.uid].clickLikePost)
         
         for (let i=0; i<Object.keys(likeControlArray).length; i++){
             if(user.uid === Object.keys(likeControlArray)[i]){
@@ -43,7 +64,7 @@ const Index = ({profilePic, image, username, timestamp, message, id, like, index
 
 
         db.collection('posts').doc(id).update({
-            likeControlArray: !check ? {
+            likeControlArray: check ? {
                 [user.uid]: {
                     post_id: id,
                     clickLikePost: likeControlArray[user.uid]===undefined?true:!likeControlArray[user.uid].clickLikePost

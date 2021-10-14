@@ -90,7 +90,10 @@ const Index = () => {
                                 message: input,
                                 image: url,
                                 username: user.displayName,
-                                profilePic: user.photoURL
+                                profilePic: user.photoURL,
+                                like:0,
+                                likeControlArray:{},
+                                clickedLikeByUsersArray:[]
                             })
                             setOpen(false)
                             setProgress(0);
