@@ -5,6 +5,7 @@ import './Style.css'
 import Like from '../../assets/icons/like.svg'
 import { ThumbUpAltOutlined, ThumbUp, ChatBubbleOutline, NearMe, MoreHoriz, DeleteOutline, ArrowDropUp, Clear, PersonAdd, FlashOnTwoTone } from '@material-ui/icons'
 import Comment from '../Comment/Index'
+import CommentsComponent from '../CommentsComponent/Index'
 import db from '../../firebase'
 import { toast } from 'react-toastify'
 import { useStateValue } from './../../StateProvider';
@@ -13,22 +14,12 @@ const Index = ({profilePic, image, username, timestamp, message, id, like, index
 
     const [comments, setComments] = useState([]);
     const [{user}, despatch] = useStateValue()
-    const [replyComId, setReplyComId] = useState(0);
-    const [isSendReplyMessage, setIsSendReplyMessage] = useState()
-    const [isAutoFocus, setIsAutoFocus] = useState(false)
     const [amountComments, setAmountComments] = useState(2);
-    const [isClickedLikeComment, setIsClickedLikeComment] = useState(localStorage.getItem('check_click_comment_like'))
     const [isClickedMoreHoriz, setIsClickedMoreHoriz] = useState(false)
-    const [isClickedMoreHorizOfCommit, setIsclickedMoreHorizOfCommit] = useState(false)
     const [open, setOpen] = useState(false)
-    const [openCommentDelete, setOpenCommentDelete] = useState(false)
     const [openLikeUsers, setOpenLikeUsers] = useState(false)
-    const [idClickedMoreHorizOfCommit, setIdClickedMoreHorizOfCommit] = useState(0)
     const [isClickedLikeCommentBtn, setIsClickedLikeCommentBtn] = useState(false)
     const [usersWhoClickForCommit, setUsersWhoClickForCommit] = useState([]);
-
-    const [b, setB] = useState(false)
-
     
     
     useEffect(() => {
@@ -38,22 +29,18 @@ const Index = ({profilePic, image, username, timestamp, message, id, like, index
             .doc(id).collection('comments')
             .orderBy('timestamp', 'desc')
             .onSnapshot((snapshot) => setComments(snapshot.docs.map((doc) =>({id:doc.id, data:doc.data()}))))
-            
         }
         return () => {
             unsubcribe();
-            
         }
         
     }, [id])
 
 
-    var checkLike;
     const handleLike = (userUsername, userPhoto) => {
 
 
         let check=false;
-        checkLike = (likeControlArray[user.uid]===undefined?true:!likeControlArray[user.uid].clickLikePost)
         
         for (let i=0; i<Object.keys(likeControlArray).length; i++){
             if(user.uid === Object.keys(likeControlArray)[i]){
@@ -86,27 +73,6 @@ const Index = ({profilePic, image, username, timestamp, message, id, like, index
             }]
         })
     }
-
-    
-
-
-    const handleCommentLike = (id_comment, likeComment, clickedLikeCommentByUsersArray, token, username, pictureUrl) => {
-        localStorage.setItem("check_click_comment_like", !JSON.parse(localStorage.getItem("check_click_comment_like")))
-        
-
-        db.collection('posts').doc(id).collection('comments').doc(id_comment).update({
-            likeComment: JSON.parse(localStorage.getItem("check_click_comment_like"))?likeComment+1:likeComment-1,
-            clickedLikeCommentByUsersArray: !JSON.parse(localStorage.getItem("check_click_comment_like"))?
-            [...clickedLikeCommentByUsersArray?.filter((e) => e.userRefreshToken!==token)]:
-            [...clickedLikeCommentByUsersArray, {
-                userPhoto: pictureUrl,
-                userUsername: username,
-                userRefreshToken: token
-            }]
-        })
-        // setUsersWhoClickForCommit([...clickedLikeCommentByUsersArray])
-    }
-
     
 
     const handleDeletePost = () => {
@@ -119,15 +85,6 @@ const Index = ({profilePic, image, username, timestamp, message, id, like, index
         })
     }
 
-    const handleDeleteComment = (id_comment) => {
-        setOpenCommentDelete(false)
-        db.collection('posts').doc(id).collection('comments').doc(id_comment).delete()
-        .then(() => {
-            toast.success("Comment was successfully deleted!")
-        }).catch(() => {
-            toast.error("Something went wrong.")
-        })
-    }
 
 
 
@@ -153,7 +110,6 @@ const Index = ({profilePic, image, username, timestamp, message, id, like, index
                     <div className="delete-post">
                         <div className="deletePost__header">
                             <p>Are you sure you want to delete this post?</p>
-                            
                         </div>
                         <div className="deletePost__body">
                             <div className="yes-btn" onClick={handleDeletePost}>Yes</div>
@@ -178,7 +134,7 @@ const Index = ({profilePic, image, username, timestamp, message, id, like, index
                             setOpen(true)
                             setIsClickedMoreHoriz(false)
                         }}>
-                            <DeleteOutline style={{color: '#414244'}}/>
+                            <DeleteOutline className='delete__post__btn' style={{color: '#414244'}}/>
                             <p>Delete Post</p>
                             <ArrowDropUp className='close-delete-div'/>
                         </div>
@@ -207,25 +163,11 @@ const Index = ({profilePic, image, username, timestamp, message, id, like, index
                     >
                         <div className="delete-post users_click_like">
                             <div className="deletePost__header users_click_like_header">
-                                <p>All(for {isClickedLikeCommentBtn?'comments':'posts'})</p>
+                                <p>All(for posts)</p>
                                 <Clear className="closeModal__btn" onClick={() => setOpenLikeUsers(false)} />
                             </div>
                             <div className="users_who_click_like">
                                 {
-                                    isClickedLikeCommentBtn?
-                                    usersWhoClickForCommit?.map(({userPhoto, userUsername}) =>
-                                        <div className='info_user_who_click_like'>
-                                            <div className="user__img">
-                                                <img src={userPhoto} alt="" style={{width: '50px', borderRadius:'50%'}} />
-                                                <img src={Like} alt='' style={{position:'absolute', width:'17px', right:'2px', bottom:'0'}} />
-                                            </div>
-                                            <p>{userUsername}</p>
-                                            <div className="add__friend__btn">
-                                                <PersonAdd style={{color:'#1D1F23'}}/>
-                                                <p>Add Friend</p>
-                                            </div>
-                                        </div>
-                                    ):
                                     clickedLikeByUsersArray?.map(({userPhoto, userUsername}) =>
                                     <div className='info_user_who_click_like'>
                                         <div className="user__img">
@@ -261,18 +203,18 @@ const Index = ({profilePic, image, username, timestamp, message, id, like, index
                         className="post-option" onClick={() => handleLike(user.displayName, user.photoURL)}>
                         {
                             likeControlArray[user.uid]?.clickLikePost?
-                            <ThumbUp style={{color: '#0571ed'}}/>:
-                            <ThumbUpAltOutlined style={{color: "#65676b"}}/>
+                            <ThumbUp style={{color: '#0571ed'}} className="post_option_btn"/>:
+                            <ThumbUpAltOutlined className="post_option_btn" style={{color: "#65676b"}}/>
                         }
                         <p style={{color: `${likeControlArray[user.uid]?.clickLikePost?'#0571ED':"#65676b"}`}}>Like</p>
                         
                     </button>
                     <div className="post-option">
-                        <ChatBubbleOutline />
+                        <ChatBubbleOutline className="post_option_btn" />
                         <p>Comment</p>
                     </div>
                     <div className="post-option">
-                        <NearMe />
+                        <NearMe className="post_option_btn" />
                         <p>Share</p>
                     </div>
                 </div>
@@ -286,164 +228,46 @@ const Index = ({profilePic, image, username, timestamp, message, id, like, index
                             {
                                 
                                 // comments.map((com) => com.data.repliedID && setRepliedIdComments({...com.data})),
-                                comments.slice(0, amountComments).map((com) =>
+                                comments.slice(0, amountComments).map((com, index) =>
 
-                                    <div className="commend">
-                                        <Avatar className='commend_sender_avatar' src={com.data.pictureUrl}/>
-                                        <div style={{position:'relative'}}> 
-                                        <Modal
-                                            aria-labelledby="transition-modal-title"
-                                            aria-describedby="transition-modal-description"
-                                            open={openCommentDelete}
-
-                                            onClose={() => setOpenCommentDelete(false)}
-                                            closeAfterTransition
-                                            BackdropComponent={Backdrop}
-                                            BackdropProps={{
-                                              timeout: 500,
-                                            }}
-                                        >
-                                            <div className="delete-comment-modal">
-                                                <div className="deleteComment-header">
-                                                    <p>Delete Comment</p>
-                                                    <Clear 
-                                                        className='close__icon' 
-                                                        onClick={() => {
-                                                            setOpenCommentDelete(false)
-                                                        }}
-                                                    />
-                                                </div>
-                                                <div className="deleteComment-body">
-                                                    <p>Are you sure you want to delete this comment?</p>
-                                                    <div className="confrim_or_reject__delete">
-                                                        <div className="cancel__btn__comment" onClick={() => setOpenCommentDelete(false)}>Cancel</div>
-                                                        <div className="delete__btn__comment" onClick={() => handleDeleteComment(com.id)}>Delete</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </Modal>
-                                        {(isClickedMoreHorizOfCommit&&idClickedMoreHorizOfCommit===com.id)&&
-                                            <OutsideClickHandler onOutsideClick={() => setIsclickedMoreHorizOfCommit(false)}>
-                                                <div className="delete__comment__div">
-                                                    <p onClick={() => {
-                                                        setOpenCommentDelete(true)
-                                                        setIsclickedMoreHorizOfCommit(false)
-                                                    }}>Delete</p>
-                                                    <ArrowDropUp className='arrow-delete-comment'/>
-                                                </div>
-                                            </OutsideClickHandler>
-                                        }
-                                        {com.data.username === user.displayName &&
-                                            <IconButton 
-                                                className='delete__comment__open__icon'
-                                                onClick={() => {
-                                                    setIsclickedMoreHorizOfCommit(!isClickedMoreHorizOfCommit)
-                                                    setIdClickedMoreHorizOfCommit(com.id)
-                                                }}
-                                                style={{
-                                                    position: 'absolute',
-                                                    right: '-50px',
-                                                    top: '16x`px'
-                                                }}
-                                            >
-                                                <MoreHoriz className="post-morehoriz-btn"/>
-                                            </IconButton>
-                                        }
-                                            <div className="comment__body">
-                                                <p className="username">{com.data.username}</p>
-
-                                                <div className="replied_com">
-                                                    <p><b>{com.data.repliedID&&com.data.repliedUser}</b></p>
-                                                    <p><i>{com.data.repliedID&&com.data.repliedMessage}</i></p>
-                                                </div>
-
-                                                <p className="commend__text">{com.data.comment}</p>
-                                            </div>
-                                            <div className="like_commed">
-                                                <div className="like" 
-                                                    onClick={() => handleCommentLike(
-                                                        com.id, 
-                                                        com.data.likeComment, 
-                                                        com.data.clickedLikeComment, 
-                                                        com.data.clickedLikeCommentByUsersArray,
-                                                        com.data.refreshToken,
-                                                        com.data.username, com.data.pictureUrl
-                                                    )}
-                                                    style={{color:`${JSON.parse(localStorage.getItem("check_click_comment_like"))?'#0571ED':'#65676B'}`}} 
-                                                >Like</div>
-                                                <div 
-                                                    className="reply" 
-                                                    onClick={() => {
-                                                        setReplyComId(com.id)
-                                                        setIsSendReplyMessage(false);   
-                                                        setIsAutoFocus(true)
-                                                    }}
-                                                >Reply</div>
-                                                <div className="time">
-                                                    {new Date().getMinutes() - new Date(com.data.timestamp)?.getMinutes()!==0?
-                                                    <p>
-                                                        {
-                                                            new Date().getMinutes() - new Date(com.data.timestamp)?.getMinutes()>0?
-                                                            new Date().getMinutes() - new Date(com.data.timestamp)?.getMinutes():
-                                                            new Date().getHours() - new Date(com.data.timestamp)?.getHours() > 0?
-                                                            new Date().getHours() - new Date(com.data.timestamp)?.getHours() :
-                                                            new Date().getDate() - new Date(com.data.timestamp)?.getDate()
-                                                        } {
-                                                        new Date().getMinutes() - new Date(com.data.timestamp)?.getMinutes()>0?
-                                                        "m":
-                                                        new Date().getHours() - new Date(com.data.timestamp)?.getHours() > 0?
-                                                        "h" : 'd'
-                                                        }
-                                                    </p>:<p>now</p>
-                                                    }       
-
-                                                </div>
-                                                {
-                                                com.data.likeComment>0&&
-                                                    <div className="like-comment_" onClick={() => {
-                                                        setIsClickedLikeCommentBtn(true)
-                                                        setOpenLikeUsers(true)
-                                                    }}>
-                                                    <img 
-                                                        style={{
-                                                            width:'18px',
-                                                            height: '18px',
-                                                        }}
-                                                        src={Like}
-                                                        alt="" 
-                                                    />
-                                                    <p>{com.data.likeComment}</p>
-                                                    </div>
-                                                }
-                                            </div>
-                                            {
-                                                com.id === replyComId && <Comment 
-                                                    postId={id} 
-                                                    username={com.data.username} 
-                                                    repliedMessage={com.data.comment}
-                                                    repliedID={com.id} 
-                                                    reply={true} 
-                                                    replySend = {setIsSendReplyMessage}
-                                                    isSend={isSendReplyMessage}
-                                                    autoFocusInput = {isAutoFocus}
-                                                />
-
-                                            }
-                                            
-                                        </div>  
-                                    </div>
+                                    <CommentsComponent 
+                                        username={com.data.username}
+                                        postId={id}
+                                        pictureUrl={com.data.pictureUrl}
+                                        comId={com.id}
+                                        comment={com.data.comment}
+                                        repliedUser={com.data.repliedUser}
+                                        repliedMessage={com.data.repliedMessage}
+                                        repliedID={com.data.repliedID}
+                                        timestamp={com.data.timestamp}
+                                        refreshToken={com.data.refreshToken}
+                                        clickedLikeCommentByUsersArray={com.data.clickedLikeCommentByUsersArray}
+                                        likeComment={com.data.likeComment}
+                                        likeCommentControl={com.data.likeCommentControl}
+                                    />
 
                                 )
                                         
                             }
                             {
-                                amountComments > 5 && <div className='expand_more_info_amount_comment'>
-                                {amountComments < comments.length?
-                                <p 
-                                    className='expand_more' 
-                                    onClick={() => setAmountComments(amountComments+4)}
-                                    style={{display: `${amountComments > comments.length ? "none":'block'}`,}}
-                                >View more comments</p>:<p className='expand_more' onClick={() =>setAmountComments(2)}>Short comments</p>
+                                amountComments > 5 && 
+                                <div className='expand_more_info_amount_comment'>
+                                {
+                                amountComments < comments.length?
+                                    <p 
+                                        className='expand_more' 
+                                        onClick={() => setAmountComments(amountComments+4)}
+                                        style={{display: `${amountComments > comments.length ? "none":'block'}`,}}
+                                    >
+                                        View more comments
+                                    </p>
+                                    :
+                                    <p 
+                                        className='expand_more' onClick={() =>setAmountComments(2)}
+                                        style={{display:`${comments.length===0&&"none"}`}}
+                                    >
+                                        Short comments
+                                    </p>
                                 }
                                 <p 
                                     className='info_amount_comment'

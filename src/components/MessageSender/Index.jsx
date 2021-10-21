@@ -10,10 +10,10 @@ import Picker from 'emoji-picker-react'
 
 
 const Index = () => {
+    const [{ user }, dispatch] = useStateValue();
     const [input, setInput] = useState("");
     const [imageUrl, setImageUrl] = useState(null);
     const [showImage, setShowImage] = useState(null);
-    const [{ user }, dispatch] = useStateValue();
     const [showPicker, setShowPicker] = useState(false);
     const [open, setOpen] = useState(false)
     const [progress, setProgress] = useState(0);
@@ -42,7 +42,7 @@ const Index = () => {
             }
         }
 
-    const handleSubmitWithCaption = (e) => {
+    const handleSubmitWithCaption = () => {
         // e.preventDefault();
 
         db.collection('posts').add({
@@ -50,7 +50,7 @@ const Index = () => {
             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
             username: user.displayName,
             profilePic: user.photoURL,
-            image: imageUrl,
+            image: "",
             like:0,
             likeControlArray:{},
             clickedLikeByUsersArray:[]
@@ -110,19 +110,17 @@ const Index = () => {
 
 
     return (
+        <>
+        <div className='message_sender'>
+            <Avatar src={user.photoURL}/>
+            <div className="input__" onClick={() => setOpen(true)}>What's on your mind</div>
+            <PhotoLibrary onClick={() => setOpen(true)} />
+        </div>
         <div className='messageSender'>
             <div className="messageSender-top" >
                 <Avatar src={user.photoURL}/>
                 <form>
-                    
-                    
-                    <div
-                      style={{
-                          width: '100%',
-                          cursor: 'pointer',
-                          fontSize:'20px',
-                          padding: "10px"
-                      }}
+                    <div className='what_is_on_your_mind'
                       onClick={() => {
                           setOpen(true)
                         }}
@@ -176,7 +174,7 @@ const Index = () => {
                             {
                                     showPicker && <Picker 
                                         className='picker'
-                                        pickerStyle={{with: '100px', position: 'absolute',right:'0',bottom:'0', zIndex:'999'}}
+                                        pickerStyle={{width: '260px', position: 'absolute',right:'0',top:'100px', zIndex:'999'}}
                                         onEmojiClick={onEmojiClick}
                                     />
                                 }
@@ -198,10 +196,15 @@ const Index = () => {
                                 />
                                 
                             </div>
-                        <div className="image__div">
-                            <p style={{display: `${showImage && 'none'}`}}>See image you choose here...</p>
-                            <img src={showImage} alt="" />
-                        </div>
+                            <div className="image__div">
+                                <p style={{display: `${showImage?'none':"block"}`}}>See image you choose here...</p>
+                                <img src={showImage} alt="" />
+                                <Clear 
+                                    className='clear__selected__image'
+                                    style={{display: `${showImage?"block":"none"}`}}
+                                    onClick={() => setShowImage("")}
+                                />
+                            </div>
                         </div>
                         
                         <div className="bottom">
@@ -219,6 +222,7 @@ const Index = () => {
                 </div>
             </Modal>
         </div>
+        </>
     )
 }
 

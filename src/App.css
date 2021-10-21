@@ -1,8 +1,42 @@
 .App{
+    width: 100%;
     background-color: #f1f2f5;
     background-size: contain;
     /* height: 100vh; */
 }
 .app-body{
     display: flex;
+    margin-left: auto;
+    justify-content: flex-end;
+    width: 83%;
+    flex-wrap: wrap;
+    /* border: 1px solid red; */
+}
+
+@media (max-width: 1340px) {
+    .app-body{
+        width: 84%;
+    }
+}
+@media (max-width: 1200px) {
+    .app-body{
+        width: 73%;
+    }
+}
+
+
+@media (max-width: 1262px) {
+    .app-body{
+        width: 100%;
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+}
+
+@media (max-width: 670px) {
+    .app-body{
+        width: 100%;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
 }

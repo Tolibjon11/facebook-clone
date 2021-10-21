@@ -9,7 +9,7 @@ const Index = () => {
     return (
         <div className="sidebar">
             <SidebarRow src={user.photoURL} title={user.displayName}/>
-            <SidebarRow Icon={LocalHospital} title="COVID-19 Information Center" />
+            <SidebarRow Icon={LocalHospital} title="COVID-19 Information" />
             <SidebarRow Icon={EmojiFlags} title="Pages" />
             <SidebarRow Icon={People} title="Friends" />
             <SidebarRow Icon={Chat} title="Messenger" />

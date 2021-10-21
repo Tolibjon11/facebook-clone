@@ -1,11 +1,38 @@
 .feed{
+    width: 100%;
     flex: 1;
-    padding: 30px 150px;
+    padding: 30px 70px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* height: 100vh;
-    overflow: auto;
-    scroll-behavior: smooth; */
+    /* border: 1px solid black; */
 }
+
+
+@media (max-width: 1340px) {
+    .feed{
+        padding: 30px 50px;
+    }
+}
+
+
+@media (max-width: 1200px) {
+    .feed{
+        padding: 30px;
+    }
+}
+
+
+@media (max-width: 670px) {
+    .feed{
+        padding: 30px 5px;
+    }
+}
+
+@media (max-width: 470px) {
+    .feed{
+        padding: 3PX 0;
+    }
+}
+

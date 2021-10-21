@@ -18,10 +18,10 @@ function App() {
         <>
           <Header />
           <ToastContainer />
-
+          <Sidebar />
           <div className='app-body'>
             {/* <div> */}
-              <Sidebar />
+              
             {/* </div> */}
             {/* <div> */}
               <Feed />

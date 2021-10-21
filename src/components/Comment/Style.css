@@ -7,8 +7,15 @@
 }
 
 .comment-avatar{
-    transform: scale(1.2);
+    transform: scale(1);
     margin-right: 10px;
+}
+
+@media (max-width: 470px) {
+    .comment-avatar{
+        transform: scale(0.9);
+        margin-right: 10px;
+    }
 }
 
 .emoji_with_input{
@@ -16,23 +23,39 @@
     word-break: break-all;
     display: flex;
     position: relative;
-    justify-content: space-between;
+    justify-content: space-be   tween;
     align-items: center;
     background-color: #F0F2F5;
-    padding: 10px;
+    padding: 8px;
     border-radius: 999px;
 }
 .emoji_with_input > input{
     width: 100%;
-    font-size: 20px;
+    font-size: 16px;
     outline: none;
     border: none;
     background-color: transparent;
 }
+
+@media (max-width: 470px) {
+    .emoji_with_input{
+        padding: 6px;
+    }
+    .emoji_with_input > input{
+      font-size: 14px;
+    }
+}
+
 .emoji-icon_{
     cursor: pointer;
 }
 .picker{
     box-shadow: 0 10px 12px gray;
+}
+
+@media (max-width: 470px) {
+    .emoji-icon_{
+        transform: scale(0.8);
+    }
 }
 

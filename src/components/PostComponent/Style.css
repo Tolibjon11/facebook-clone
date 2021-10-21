@@ -1,9 +1,15 @@
 .post{
-    width: 100%;
+    width: 90%;
     margin-top: 15px;
     border-radius: 15px;
     background-color: white;
     box-shadow: 0px 5px 7px -7px rgba(0, 0, 0, 0.75);
+}
+
+@media (max-width: 560px) {
+    .post{
+        width: 100%;
+    }
 }
 
 .post-top{
@@ -26,6 +32,7 @@
     color: gray;
 }
 
+
 .post-morehoriz-btn{
     transform: scale(1.2);
 }
@@ -39,12 +46,28 @@
     top: 60px;
 }
 
+@media (max-width: 470px) {
+    .delete-div{
+        right: 5px;
+    }
+}
+
 .delete-container{
     display: flex;
     padding: 5px 30px 5px 5px;
     border-radius: 6px;
     transition: all 0.3s ease;
 }
+
+@media (max-width: 470px) {
+    .delete-container{
+        display: flex;
+        padding: 3px 20px 3px 3px;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+    }
+}
+
 .delete-container:hover{
     background-color: #eff2f5;
     cursor: pointer;
@@ -70,6 +93,16 @@
     font-weight: 550;
     margin-left:5px;
     color: #414244;
+}
+
+@media (max-width: 470px) {
+    .delete-container > p{
+        font-size: 16px;
+        margin-left: 0;
+    }
+    .delete__post__btn{
+        transform: scale(0.8);
+    }
 }
 
 .close-delete-div{
@@ -113,6 +146,14 @@
     font-weight: 670;
 }
 
+@media (max-width: 470px) {
+    .deletePost__header > p{
+        font-size: 16px;
+        text-align: center;
+        font-weight: 570;
+    }
+}
+
 .deletePost__body{
     display: flex;
     justify-content: space-between;
@@ -127,6 +168,13 @@
     color: white;
     border-radius: 10px;
     cursor: pointer;
+}
+
+@media (max-width: 470px) {
+    .yes-btn, .no-btn{
+        font-size: 15px;
+        font-weight: 500;
+    }
 }
 
 .no-btn{
@@ -172,15 +220,22 @@
     border-bottom: 1px solid gray;
 }
 .like_ > p{
-    font-size: 18px;
+    font-size: 16px;
     padding-left: 8px;
     color: #65676B;
 }
 .comment > p{
-    font-size: 18px;
+    font-size: 16px;
     color: #65676B;
     border-bottom: 1px solid transparent;
 }
+
+@media (max-width: 470px) {
+    .like_ > p, .comment > p{
+        font-size: 15px;
+    }
+}
+
 .comment > p:hover{
     border-bottom: 1px solid #65676B;
     cursor: pointer;
@@ -212,9 +267,23 @@
 
 .post-option > p{
     margin-left: 10px;
-    font-size: 20px;
-    font-weight: 550;
+    font-size: 16px;
+    font-weight: 500;
     color: #65676B;
+}
+
+@media (max-width: 560px) {
+    .post-option{
+        align-items: center;
+    }
+    .post-option > p{
+        font-size: 14px;
+        margin-left: 5px;
+        font-weight: 500;
+    }
+    .post_option_btn{
+        transform: scale(0.8);
+    }
 }
 
 .post-option:hover{
@@ -245,6 +314,12 @@
     transform: scale(1.1);
 }
 
+@media (max-width: 470px) {
+    .commend_sender_avatar{
+        transform: scale(0.9);
+    }
+}
+
 .comment__body{
     background-color: #F0F2F5;
     padding: 15px 10px;
@@ -256,6 +331,12 @@
     justify-content: space-between;
     word-break: break-all;
     max-width: 350px;
+}
+
+@media (max-width: 470px) {
+    .commend__text{
+        font-size: 16px;
+    }
 }
 
 .delete-comment-modal{
@@ -336,8 +417,8 @@
     padding: 5px;
     position: absolute;
     background-color: white;
-    right: -72px;
-    top: 50px;
+    right: -22px;
+    top: 40px;
 }
 
 .delete__comment__div > p{
@@ -346,6 +427,12 @@
     padding: 4px 50px 4px 4px;
     border-radius: 7px;
     transition: all 0.3s ease-in-out;
+}
+
+@media (max-width: 470px) {
+    .delete__comment__div > p{
+        font-size: 15px;
+    }
 }
 
 .delete__comment__div > p:hover{
@@ -369,16 +456,17 @@
     position: relative;
 }
 
-.delete__comment__open__icon{
-    position: absolute;
-    right: 0;
-    top: 0;
-}
 
 
 
 .username{
     font-weight: 500;
+}
+
+@media (max-width: 470px) {
+    .username{
+        font-size: 16px;
+    }
 }
 
 .like_commed{
@@ -392,6 +480,16 @@
     border-bottom: 2px solid transparent;
     margin-right: 10px;
     cursor: pointer;
+}
+
+@media (max-width: 470px) {
+    .like, .reply{
+        font-weight: 550;
+        font-size: 14px;
+    }
+    .time > p{
+        font-size: 14px;
+    }
 }
 
 .sender{
@@ -408,11 +506,21 @@
     color: #65676B;
 }
 
+@media (max-width: 470px) {
+    .replied_com > p{
+        font-size: 14px;
+    }
+}
+
 .expand_more_info_amount_comment{
     display: flex;
     width: 100%;
     justify-content: space-between;
     margin-bottom: 10px;
+}
+
+.expand_more_info_amount_comment>p{
+    font-size: 16px;
 }
 
 .expand_more, .info_amount_comment{
@@ -422,6 +530,17 @@
     border-bottom: 2px solid transparent;
     width: fit-content;
 }
+
+@media (max-width:560px) {
+    .expand_more, .info_amount_comment{
+        font-weight: 400;
+        font-size: 16px;
+    }
+    .expand_more:hover{
+        border-bottom: 2px solid transparent;
+    }
+}
+
 .expand_more:hover{
     border-bottom: 2px solid #65676B;
     cursor: pointer;
@@ -446,9 +565,13 @@
 
 .users_click_like{
     width: 600px;
+    max-height: 290px;
     padding-left: 0;
     padding-right: 0;
+    overflow: auto;
 }
+
+
 
 
 .users_who_click_like{
@@ -531,4 +654,28 @@
     font-size: 18px;
     font-weight: 650;
     margin-left: 5px;
+}
+
+@media (max-width: 470px) {
+    .users_who_click_like{
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .info_user_who_click_like>p{
+        font-size: 16px;
+        font-weight: 500;
+    }
+    .user__img{
+        transform: scale(0.7);
+    }
+    .add__friend__btn>p{
+        font-size: 14px;
+        font-weight: 500;
+    }
+    .info_user_who_click_like>p:hover{
+        border-bottom: 1px solid transparent;
+    }
+    .deleteComment-header > p{
+        font-size: 20px;
+    }
 }

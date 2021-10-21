@@ -19,3 +19,9 @@
     font-size: xx-large;
     color: #2e81f4;
 }
+
+@media (max-width:470px) {
+    .sidebarRow{
+        width: 100%;
+    }
+}

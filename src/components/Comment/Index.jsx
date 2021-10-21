@@ -33,7 +33,8 @@ const Index = ({postId, repliedID, reply, username, repliedMessage, replySend, i
             repliedUser: reply===true&&username,
             repliedMessage: reply===true&&repliedMessage,
             likeComment:0,
-            clickedLikeCommentByUsersArray: []
+            clickedLikeCommentByUsersArray: [],
+            likeCommentControl:{}
         })
 
         reply===true&&replySend(true);
@@ -78,7 +79,7 @@ const Index = ({postId, repliedID, reply, username, repliedMessage, replySend, i
                 {
                     showPicker && <Picker 
                         className='picker'
-                        pickerStyle={{with: '100px', position: 'absolute',right:'0',bottom:'60px', zIndex:'999'}}
+                        pickerStyle={{width: '200px', position: 'absolute',right:'0',bottom:'60px', zIndex:'999'}}
                         onEmojiClick={onEmojiClick}
                     />
                 }

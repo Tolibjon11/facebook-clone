@@ -1,6 +1,12 @@
 .sidebar{
     padding: 25px 10px;
     flex: 0.33;
-    /* position: absolute; */
-    /* position: fixed; */
+    position: fixed;
+    left: 0;
+}
+
+@media (max-width: 1262px) {
+    .sidebar{
+        display: none;
+    }
 }
