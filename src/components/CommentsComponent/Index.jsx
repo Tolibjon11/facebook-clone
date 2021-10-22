@@ -32,7 +32,6 @@ const Index = ({
 
 
     const handleCommentLike = () => {
-
         
         let check=false;
         
@@ -60,12 +59,12 @@ const Index = ({
                 }
             },
             likeComment: (likeCommentControl[user.uid]===undefined?true:!likeCommentControl[user.uid].clickedLikeComment)?likeComment+1:likeComment-1,
-            clickedLikeCommentByUsersArray: (likeCommentControl[user.uid]===undefined?false:!likeCommentControl[user.uid].clickedLikeComment)?
-            [...clickedLikeCommentByUsersArray?.filter((e) => e.userRefreshToken!==refreshToken)]:
+            clickedLikeCommentByUsersArray: (likeCommentControl[user.uid]===undefined?false:likeCommentControl[user.uid].clickedLikeComment)?
+            [...clickedLikeCommentByUsersArray?.filter((e) => e.userRefreshToken!==user.uid)]:
             [...clickedLikeCommentByUsersArray, {
-                userPhoto: pictureUrl,
-                userUsername: username,
-                userRefreshToken: refreshToken
+                userPhoto: user.photoURL,
+                userUsername: user.displayName,
+                userRefreshToken: user.uid
             }]
         })
         // setUsersWhoClickForCommit([...clickedLikeCommentByUsersArray])

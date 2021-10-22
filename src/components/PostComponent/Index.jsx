@@ -23,7 +23,6 @@ const Index = ({profilePic, image, username, timestamp, message, id, like, index
     
     
     useEffect(() => {
-        localStorage.setItem("check_click_comment_like", JSON.parse(localStorage.getItem("check_click_comment_like")))
         if(id){
             var unsubcribe = db.collection('posts')
             .doc(id).collection('comments')

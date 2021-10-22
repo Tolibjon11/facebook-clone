@@ -1,5 +1,5 @@
 import { Button } from '@material-ui/core'
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import './Style.css'
 import { auth, provider } from '../../firebase'
 import { actionTypes } from '../../reducer'
@@ -21,6 +21,7 @@ const Index = () => {
                 user: result.user
             })
         }).catch(error => alert(error.message))
+
     }
     return (
         <div className='login'>
