@@ -11,6 +11,7 @@ const Index = () => {
             <iframe src="https://www.facebook.com/plugins/video.php?height=298&href=https%3A%2F%2Fwww.facebook.com%2Fmuhammadali.eshonqulov%2Fvideos%2F202779365254832%2F&show_text=true&width=560&t=0"  height="413" style={{border:'none', overflow:'hidden', backgroundColor:'white'}} scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
             <iframe src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Fmuhammadali.eshonqulov%2Fvideos%2F1105315476966708%2F&show_text=true&width=476&t=0"  height="800" style={{border:'none', overflow:'hidden', backgroundColor:'white'}} scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
             <iframe src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2FChampionsLeague%2Fvideos%2F400630684914719%2F&show_text=true&width=476&t=0"  height="700" style={{border:'none', overflow:'hidden', backgroundColor:'white'}} scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
+        
         </div>
     )
 }

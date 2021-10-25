@@ -7,18 +7,23 @@
     height: 100%;
     overflow: auto;
 }
+
+
 .widgets > iframe{
     margin-bottom: 20px;
     width: 400px;
 }
+
 
 .modal_container{
     width: 300px;
     height: 300px;
 }
 
+
 @media (max-width: 1080px) {
     .widgets > iframe{
-        width: 300px
+        width: 300px;
+        margin-right: 50px;
     }
 }
