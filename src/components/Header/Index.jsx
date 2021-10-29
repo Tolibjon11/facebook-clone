@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import './Style.css'
 import firebase from 'firebase'
+import {auth} from '../../firebase'
 import OutsideClickHandler from 'react-outside-click-handler'
 import logo from '../../assets/icons/icons8-facebook.svg'
 import { 
@@ -28,6 +29,13 @@ const Index = () => {
     const [{user}, dispatch] = useStateValue();
     const [open, setOpen] = useState(false)
     const [openNavbar, setOpenNavbar] = useState(false)
+
+    const logOut = () => {
+        // for (var member in user) delete user[member];
+        // console.log("Deleted user: ", user)
+        // user = null;
+        window.location.reload();
+    }
 
 
     return (<div className='header'>
@@ -116,7 +124,7 @@ const Index = () => {
                                     <div className="text text_">Display & Accessibility</div>
                                     <ArrowForwardIos style={{marginLeft:'auto'}} />
                                 </div>
-                                <div className="user_info_body_box">
+                                <div className="user_info_body_box" onClick={logOut}>
                                     <div className="icon"><ExitToApp /></div>
                                     <div className="text text_">Log Out</div>
                                 </div>

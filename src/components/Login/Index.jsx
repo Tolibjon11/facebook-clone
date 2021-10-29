@@ -38,9 +38,6 @@ const Index = () => {
             <Button type='submit' onClick={signIn}>
                 Sign In
             </Button>
-            <Button onClick={() => auth.signOut()}>
-                Sign Out
-            </Button>
         </div>
     )
 }

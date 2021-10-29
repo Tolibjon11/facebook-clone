@@ -1,7 +1,7 @@
 import db from './firebase'
 
 
-export const initialState = {
+export let initialState = {
     user: null
 };
 
