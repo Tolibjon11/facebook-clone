@@ -56,7 +56,7 @@ const Index = ({postId, repliedID, reply, username, repliedMessage, replySend, i
                     value={commit} 
                     type="text" placeholder='Write a comment...' 
                     onChange={(e) => setCommit(e.target.value)}
-                    autoFocus={`${reply===true&&autoFocusInput}`} 
+                    // autoFocus={`${reply?autoFocusInput:false}`}
                 />
                 <InsertEmoticon
                     className='emoji-icon_'
