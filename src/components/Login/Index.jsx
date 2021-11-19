@@ -36,7 +36,7 @@ const Index = () => {
                 />
             </div>
             <Button type='submit' onClick={signIn}>
-                Sign In..
+                Sign In
             </Button>
         </div>
     )
